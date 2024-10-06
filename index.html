@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Quote | Axies & Lands</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>NFT Quote</h1>
+    </header>
+    <main>
+        <section class="quote-section">
+            <div class="wallet-connect">
+                <button id="connect-wallet">Connect Ronin Wallet</button>
+            </div>
+            <div class="input-area">
+                <input type="text" id="nft-id" placeholder="Enter Axie or Land ID" />
+                <button id="get-quote">Get Quote</button>
+            </div>
+            <div class="quote-display">
+                <h2 id="nft-name">Axie/Tierra Name</h2>
+                <img id="nft-image" src="placeholder.jpg" alt="Axie/Tierra Image">
+                <p id="nft-price">Price in WETH: <span>0.0</span></p>
+            </div>
+            <div class="action-area">
+                <button id="send-nft">Send Axie/Tierra</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NFT Quote Platform</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
