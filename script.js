@@ -1,5 +1,6 @@
 const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-const axieAPI = `https://github.com/horaciolidity/axie/blob/main/api/axie.js`;
+const axieAPI = `https://github.com/horaciolidity/axie/blob/main/api/axie?id=`;
+
 
 document.getElementById('get-quote').addEventListener('click', async () => {
     const nftId = document.getElementById('nft-id').value;
