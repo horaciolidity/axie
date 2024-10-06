@@ -1,32 +1,44 @@
-// Simulating Ronin Wallet connection and getting data for the quote
+const API_BASE_URL = 'https://axieinfinity.com/api/v2/';
+
+// Función para conectar la Ronin Wallet
 document.getElementById('connect-wallet').addEventListener('click', () => {
+    // Aquí iría el código para conectar la Ronin Wallet
     alert("Ronin Wallet connected successfully!");
-    // Here you can add the actual wallet connection logic using Ronin Wallet SDK or a similar service
+    // Lógica de conexión real con Ronin Wallet SDK
 });
 
-document.getElementById('get-quote').addEventListener('click', () => {
+// Función para obtener la cotización de un Axie o Tierra
+document.getElementById('get-quote').addEventListener('click', async () => {
     const nftId = document.getElementById('nft-id').value;
-    
-    // Simulate fetching data about the Axie or Land based on the ID
-    if (nftId) {
-        // Simulated data for demonstration
-        const nftData = {
-            name: `Axie #${nftId}`,
-            price: (Math.random() * 5).toFixed(3), // Simulated WETH price
-            imageUrl: "https://path-to-axie-or-land-image.com"
-        };
 
-        // Update the HTML with fetched data
-        document.getElementById('nft-name').textContent = nftData.name;
-        document.getElementById('nft-price').querySelector('span').textContent = nftData.price;
-        document.getElementById('nft-image').src = nftData.imageUrl;
+    if (nftId) {
+        try {
+            // Llamada a la API de Axie Infinity para obtener los detalles del NFT
+            const response = await fetch(`${API_BASE_URL}axies/${nftId}`);
+            if (!response.ok) {
+                throw new Error('NFT not found.');
+            }
+            const nftData = await response.json();
+
+            // Actualizamos los datos en el HTML
+            document.getElementById('nft-name').textContent = nftData.name || `Axie #${nftId}`;
+            document.getElementById('nft-price').querySelector('span').textContent = (Math.random() * 5).toFixed(3); // Aquí puede ir una cotización real en WETH si tienes un servicio de cotización
+            document.getElementById('nft-image').src = nftData.image || 'placeholder.jpg';
+
+            // Habilitamos el botón de envío si se encontró el NFT
+            document.getElementById('send-nft').disabled = false;
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
     } else {
         alert('Please enter a valid NFT ID.');
     }
 });
 
+// Función para enviar el NFT (simulado)
 document.getElementById('send-nft').addEventListener('click', () => {
-    // Simulate sending the NFT to the desired address
+    // Aquí va la lógica de enviar el NFT a una dirección (conectado a la blockchain real)
     alert("NFT sent successfully!");
-    // Here, include the actual smart contract or blockchain transaction logic
+    // Implementa la lógica real de transacción utilizando Ronin Wallet SDK o smart contracts
 });
+
