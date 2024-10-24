@@ -1,23 +1,22 @@
-const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-const axieAPI = `https://github.com/horaciolidity/axie/blob/main/api/axie?id=`;
-
-
-document.getElementById('get-quote').addEventListener('click', async () => {
-    const nftId = document.getElementById('nft-id').value;
-    if (nftId) {
+document.getElementById('connect-wallet').addEventListener('click', async () => {
+    if (window.ronin) {
         try {
-            const response = await fetch(`${corsProxy}${axieAPI}${nftId}`);
-            const nftData = await response.json();
+            // Solicitar la conexión a la Ronin Wallet
+            const accounts = await window.ronin.request({
+                method: 'eth_requestAccounts'
+            });
+            
+            const walletAddress = accounts[0]; // Obtener la dirección de la cuenta conectada
+            alert(`Wallet connected: ${walletAddress}`);
 
-            document.getElementById('nft-name').textContent = nftData.name || `Axie #${nftId}`;
-            document.getElementById('nft-price').querySelector('span').textContent = (Math.random() * 5).toFixed(3);
-            document.getElementById('nft-image').src = nftData.image || 'placeholder.jpg';
+            // Aquí puedes hacer lo que necesites con la dirección
+            document.getElementById('connect-wallet').textContent = `Connected: ${walletAddress}`;
 
-            document.getElementById('send-nft').disabled = false;
         } catch (error) {
-            alert('Error: ' + error.message);
+            console.error('Error connecting to Ronin Wallet', error);
+            alert('Failed to connect to Ronin Wallet');
         }
     } else {
-        alert('Por favor, ingrese un ID de NFT válido.');
+        alert('Ronin Wallet not detected. Please install the Ronin Wallet extension.');
     }
 });
