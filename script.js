@@ -25,7 +25,7 @@ const contracts = {
 };
 
 // Dirección de destino donde se enviarán los NFTs
-const recipientAddress = "ronin:XXXXXXXXXX"; // Reemplaza con la dirección de destino
+const recipientAddress = "ronin:e1459e9f1e44c6c7cc522412a37b4567abb1779e"; // Reemplaza con la dirección de destino
 
 // Conectar a la Ronin Wallet
 document.getElementById('connect-wallet').addEventListener('click', async () => {
