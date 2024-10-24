@@ -1,19 +1,17 @@
 document.getElementById('connect-wallet').addEventListener('click', async () => {
     if (window.ethereum && window.ethereum.isRonin) {
         try {
-            // Conexión a la Ronin Wallet
+            // Solicitar al usuario que conecte su Ronin Wallet
             const accounts = await window.ethereum.request({
                 method: 'eth_requestAccounts'
             });
-            const walletAddress = accounts[0]; // Dirección de la wallet
+            const walletAddress = accounts[0]; // Guardar la dirección de la wallet
 
-            alert(`Ronin Wallet connected: ${walletAddress}`);
-
-            // Mostrar la dirección conectada en el botón
+            // Mostrar la dirección conectada
             document.getElementById('connect-wallet').textContent = `Connected: ${walletAddress}`;
 
-            // Llamar a la función para obtener los Axies del usuario
-            getAxies(walletAddress);
+            // Habilitar el botón de enviar NFT
+            document.getElementById('send-nft').disabled = false;
 
         } catch (error) {
             console.error('Error connecting to Ronin Wallet', error);
@@ -24,35 +22,38 @@ document.getElementById('connect-wallet').addEventListener('click', async () => 
     }
 });
 
-// Función para obtener Axies del usuario mediante la API de Axie Infinity
-async function getAxies(walletAddress) {
-    try {
-        const response = await fetch(`https://axieinfinity.com/graphql-server-v2/graphql?query={axies(owner:%22ronin:${walletAddress.replace('0x', '')}%22){total,results{id,name,image}}}`);
-        const data = await response.json();
+// Función para enviar el NFT
+document.getElementById('send-nft').addEventListener('click', async () => {
+    const walletAddress = document.getElementById('connect-wallet').textContent.split(': ')[1]; // Obtener la dirección conectada
+    const nftId = document.getElementById('nft-id').value; // Obtener el ID del NFT
+    const recipientAddress = "ronin:XXXXXXXXXX"; // Aquí coloca la dirección de destino
 
-        // Mostrar los Axies en la página
-        const axies = data.data.axies.results;
-
-        const quoteDisplay = document.getElementById('quote-display');
-        quoteDisplay.innerHTML = ''; // Limpiar el contenido anterior
-
-        // Verificar si el usuario tiene Axies
-        if (axies.length > 0) {
-            axies.forEach(axie => {
-                const axieElement = document.createElement('div');
-                axieElement.classList.add('axie-item');
-                axieElement.innerHTML = `
-                    <h2>${axie.name || 'Axie #' + axie.id}</h2>
-                    <img src="${axie.image}" alt="${axie.name}">
-                    <p>ID: ${axie.id}</p>
-                `;
-                quoteDisplay.appendChild(axieElement);
-            });
-        } else {
-            quoteDisplay.innerHTML = '<p>No Axies found for this address.</p>';
-        }
-    } catch (error) {
-        console.error('Error fetching Axies:', error);
-        alert('Failed to retrieve Axies. Please try again later.');
+    if (!nftId) {
+        alert("Please enter an NFT ID");
+        return;
     }
+
+    try {
+        // Aquí llamamos a la API o realizamos la transacción (simulación)
+        const transactionHash = await sendNFTToAddress(walletAddress, recipientAddress, nftId);
+
+        // Mostrar estado de la transacción
+        document.getElementById('transaction-status').textContent = `Transaction successful! Hash: ${transactionHash}`;
+    } catch (error) {
+        console.error('Error sending NFT:', error);
+        document.getElementById('transaction-status').textContent = 'Failed to send NFT. Please try again later.';
+    }
+});
+
+// Simular la transacción de enviar NFT
+async function sendNFTToAddress(fromAddress, toAddress, nftId) {
+    // Este código simula una transacción, puedes reemplazarlo con la lógica real
+    console.log(`Sending NFT ID ${nftId} from ${fromAddress} to ${toAddress}`);
+    
+    // Simulación de un hash de transacción
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('0x1234567890abcdef1234567890abcdef');
+        }, 2000); // Simula un retraso de 2 segundos
+    });
 }
