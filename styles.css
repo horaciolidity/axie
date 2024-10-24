@@ -85,3 +85,14 @@ input {
 p {
     font-size: 1.2rem;
 }
+.axie-item {
+    border: 1px solid #fff;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+}
+.axie-item img {
+    max-width: 100px;
+    height: auto;
+}
+
