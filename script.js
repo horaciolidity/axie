@@ -1,15 +1,16 @@
 document.getElementById('connect-wallet').addEventListener('click', async () => {
-    if (window.ronin) {
+    // Verificar si Ronin Wallet está disponible
+    if (window.ethereum && window.ethereum.isRonin) {
         try {
-            // Solicitar la conexión a la Ronin Wallet
-            const accounts = await window.ronin.request({
+            // Solicitar la conexión a Ronin Wallet
+            const accounts = await window.ethereum.request({
                 method: 'eth_requestAccounts'
             });
-            
-            const walletAddress = accounts[0]; // Obtener la dirección de la cuenta conectada
-            alert(`Wallet connected: ${walletAddress}`);
 
-            // Aquí puedes hacer lo que necesites con la dirección
+            const walletAddress = accounts[0]; // Obtener la dirección de la cuenta conectada
+            alert(`Ronin Wallet connected: ${walletAddress}`);
+
+            // Actualizar el texto del botón para reflejar la conexión
             document.getElementById('connect-wallet').textContent = `Connected: ${walletAddress}`;
 
         } catch (error) {
