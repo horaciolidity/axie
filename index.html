@@ -8,28 +8,35 @@
 </head>
 <body>
     <header>
-        <h1>NFT Quote</h1>
+        <h1>NFT Quote & Transfer</h1>
     </header>
     <main>
         <section class="quote-section">
+            <!-- Botón para conectar la wallet -->
             <div class="wallet-connect">
                 <button id="connect-wallet">Connect Ronin Wallet</button>
             </div>
+
+            <!-- Área de entrada del ID del NFT -->
             <div class="input-area">
                 <input type="text" id="nft-id" placeholder="Enter Axie or Land ID" />
-                <button id="get-quote">Get Quote</button>
             </div>
-            <div class="quote-display" id="quote-display">
-                <!-- Aquí aparecerán los Axies del usuario -->
-            </div>
+
+            <!-- Botón para enviar el NFT -->
             <div class="action-area">
-                <button id="send-nft" disabled>Send Axie/Tierra</button>
+                <button id="send-nft" disabled>Send NFT</button>
+            </div>
+
+            <!-- Mostrar feedback -->
+            <div class="feedback">
+                <p id="transaction-status"></p>
             </div>
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 NFT Quote Platform</p>
+        <p>&copy; 2024 NFT Quote & Transfer Platform</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
